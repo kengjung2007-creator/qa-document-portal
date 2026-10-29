@@ -1,0 +1,26 @@
+{
+  "QA001": {
+    "title": "Industrial Solvent High Purity QA Certificate",
+    "product": "Industrial Solvent A-1",
+    "category": "QA Certificate",
+    "version": "1.0",
+    "lastUpdate": "2026-09-01",
+    "pdf": "/documents/QA001.pdf"
+  },
+  "QA002": {
+    "title": "Polymer Resin Batch Certificate of Analysis (COA)",
+    "product": "Polymer Resin Grade B",
+    "category": "COA",
+    "version": "2.1",
+    "lastUpdate": "2026-09-05",
+    "pdf": "/documents/QA002.pdf"
+  },
+  "SDS-900": {
+    "title": "Safety Data Sheet - Caustic Cleaner",
+    "product": "Cleaning Compound C",
+    "category": "SDS",
+    "version": "4.0",
+    "lastUpdate": "2026-08-15",
+    "pdf": "/documents/QA001.pdf"
+  }
+}

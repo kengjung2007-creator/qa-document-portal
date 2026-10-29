@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document Resolver - QA Portal</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="container" style="max-width: 600px; margin: 60px auto; text-align: center;">
+    <div id="resolverCard" class="doc-card" style="padding: 40px; display: none;">
+      <h2 id="resDocCode" style="margin-bottom: 8px;"></h2>
+      <h3 id="resDocTitle" style="color: var(--primary); margin-bottom: 16px;"></h3>
+      <p id="resDocProduct" class="meta"></p>
+      <p id="resDocVersion" class="meta"></p>
+      <p id="resDocDate" class="meta" style="margin-bottom: 24px;"></p>
+      <div style="display: flex; gap: 12px; justify-content: center;">
+        <a id="resPdfOpenBtn" href="#" class="btn btn-primary" style="padding: 10px 20px;">Open Latest PDF</a>
+        <a id="resPdfDownloadBtn" href="#" download class="btn btn-outline" style="padding: 10px 20px;">Download</a>
+      </div>
+    </div>
+
+    <div id="loadingText">
+      <p>Resolving permanent document code...</p>
+    </div>
+
+    <div id="errorBox" style="display: none; padding: 20px; background: #ffebe6; color: #de350b; border-radius: 8px;">
+      <h3>Document Not Found</h3>
+      <p>The specified permanent document identifier is invalid or has been decommissioned.</p>
+    </div>
+  </div>
+
+  <script src="../js/viewer.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const params = new URLSearchParams(window.location.search);
+      const docId = params.get("id");
+
+      if (!docId) {
+        document.getElementById("loadingText").style.display = "none";
+        document.getElementById("errorBox").style.display = "block";
+        return;
+      }
+
+      try {
+        const basePath = DocumentViewer.getBaseUrl();
+        const response = await fetch(`${basePath}/data/documents.json`);
+        const db = await response.json();
+        const doc = db[docId];
+
+        if (!doc) {
+          throw new Error("ID not in database");
+        }
+
+        const resolvedUrl = DocumentViewer.resolvePdfUrl(doc.pdf);
+
+        document.getElementById("resDocCode").innerText = docId;
+        document.getElementById("resDocTitle").innerText = doc.title;
+        document.getElementById("resDocProduct").innerText = "Product: " + doc.product;
+        document.getElementById("resDocVersion").innerText = "Latest Version: " + doc.version;
+        document.getElementById("resDocDate").innerText = "Updated: " + doc.lastUpdate;
+
+        const openBtn = document.getElementById("resPdfOpenBtn");
+        openBtn.href = resolvedUrl;
+        
+        const dlBtn = document.getElementById("resPdfDownloadBtn");
+        dlBtn.href = resolvedUrl;
+
+        document.getElementById("loadingText").style.display = "none";
+        document.getElementById("resolverCard").style.display = "block";
+
+        // Auto-redirect ไปยัง PDF ทันทีสำหรับ QR Code Scanner
+        window.location.replace(resolvedUrl);
+
+      } catch (err) {
+        document.getElementById("loadingText").style.display = "none";
+        document.getElementById("errorBox").style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting - QA Portal</title>
+  <script>
+    // GitHub Pages SPA Router สำหรับ QR Code URL: /doc/{DocumentCode}
+    (function () {
+      const path = window.location.pathname;
+      const docMatch = path.match(/\/doc\/([A-Za-z0-9_-]+)\/?$/);
+
+      // ตรวจหา Base Path สำหรับ GitHub Pages (Subfolder)
+      let basePath = "";
+      if (window.location.hostname.includes("github.io")) {
+        const segment = path.split("/")[1];
+        if (segment && segment !== "doc") {
+          basePath = "/" + segment;
+        }
+      }
+
+      if (docMatch && docMatch[1]) {
+        const docCode = docMatch[1];
+        // ส่งต่อแบบ Silent ไปที่ doc/index.html?id=...
+        window.location.replace(basePath + "/doc/?id=" + encodeURIComponent(docCode));
+      } else {
+        // กรณี URL ผิดพลาดจริง ให้แสดงข้อความ 404
+        window.addEventListener("DOMContentLoaded", () => {
+          document.getElementById("error-container").style.display = "block";
+        });
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="error-container" class="container text-center" style="display: none; padding-top: 80px;">
+    <h2>Document Not Found (404)</h2>
+    <p>The requested document or page does not exist or has been relocated.</p>
+    <p>Please contact Quality Assurance: <strong>qa-support@company.com</strong></p>
+    <br>
+    <a href="./" class="btn btn-primary">Return to Document Center</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QA Document Portal - Corporate Manufacturing</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-content">
+      <div class="brand">
+        <span class="brand-logo">🏭</span>
+        <span class="brand-name">Enterprise QA Portal</span>
+      </div>
+      <div class="nav-status">
+        <span class="status-indicator"></span> Public Document Center
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero-section">
+      <h1>Quality Assurance & Compliance Documents</h1>
+      <p>Search and download official Certificates of Analysis (COA), SDS, and Technical Specifications.</p>
+      
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search by Document Code, Product Name, or Category..." autocomplete="off">
+        <span class="search-icon">🔍</span>
+      </div>
+    </section>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-category="ALL">All Documents</button>
+      <button class="filter-btn" data-category="QA Certificate">QA Certificate</button>
+      <button class="filter-btn" data-category="COA">COA</button>
+      <button class="filter-btn" data-category="SDS">SDS</button>
+      <button class="filter-btn" data-category="Technical Datasheet">Datasheet</button>
+      <button class="filter-btn" data-category="Specification">Specification</button>
+      <button class="filter-btn" data-category="Manual">Manual</button>
+    </div>
+
+    <div id="documentGrid" class="document-grid">
+      <!-- Document Cards will be rendered here by app.js -->
+    </div>
+  </main>
+
+  <!-- PDF Viewer Modal -->
+  <div id="pdfModal" class="modal" style="display:none;">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modalTitle">Document Viewer</h3>
+        <div class="modal-actions">
+          <a id="modalDownloadBtn" href="#" download class="btn btn-sm btn-outline">Download</a>
+          <button id="modalNewTabBtn" class="btn btn-sm btn-outline">Open in New Tab</button>
+          <button id="modalCloseBtn" class="btn-close">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <iframe id="pdfFrame" src="about:blank"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 Enterprise Manufacturing Corp. Permanent QR System Active.</p>
+      <p class="footer-links"><a href="doc/">Manual Document Lookup</a></p>
+    </div>
+  </footer>
+
+  <script src="js/viewer.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
